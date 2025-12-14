@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Світло Суми</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+}
+
+header{
+  text-align:center;
+  padding:15px;
+  font-size:24px;
+  font-weight:bold;
+  text-shadow: 1px 1px 4px #00000055;
+}
+
+.menu{
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:10px;
+  padding:10px;
+}
+
+button{
+  padding:14px;
+  font-size:18px;
+  border:none;
+  border-radius:15px;
+  color:white;
+  cursor:pointer;
+  transition: transform 0.2s;
+}
+button:hover{
+  transform: scale(1.05);
+}
+
+/* Кольори кнопок */
+.c1{background:#ff7675}
+.c2{background:#fdcb6e}
+.c3{background:#00b894}
+.c4{background:#0984e3}
+.c5{background:#6c5ce7}
+.c6{background:#d63031}
+
+#content{
+  padding:15px;
+  text-align:center;
+}
+
+/* Блоки часу */
+.time-block{
+  background: linear-gradient(135deg,#1abc9c,#16a085);
+  padding:12px;
+  margin:6px 0;
+  border-radius:12px;
+  font-size:18px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: background 0.3s;
+}
+.time-block:hover{
+  background: linear-gradient(135deg,#16a085,#1abc9c);
+}
+
+/* Графік */
+.chart{
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  height:160px;
+  margin-top:15px;
+}
+
+.bar{
+  width:35px;
+  margin:0 5px;
+  background:#ffffff33;
+  border-radius:8px;
+  transition: background 0.3s;
+}
+
+.bar div{
+  background:#00ffcc;
+  width:100%;
+  border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<header id="title">Головне меню</header>
+
+<div class="menu">
+<button class="c1" id="btn1">1.1</button>
+<button class="c1" id="btn2">1.2</button>
+<button class="c2" id="btn3">2.1</button>
+<button class="c2" id="btn4">2.2</button>
+<button class="c3" id="btn5">3.1</button>
+<button class="c3" id="btn6">3.2</button>
+<button class="c4" id="btn7">4.1</button>
+<button class="c4" id="btn8">4.2</button>
+<button class="c5" id="btn9">5.1</button>
+<button class="c5" id="btn10">5.2</button>
+<button class="c6" id="btn11">6.1</button>
+<button class="c6" id="btn12">6.2</button>
+</div>
+
+<div id="content"></div>
+
+<script defer>
+// === ГРАФІКИ (ЗАВЖДИ СТОВПЧИКОМ) ===
+const schedule = {
+  "1.1": ["00:00–04:00","05:00–15:00"],
+  "1.2": ["06:00–12:00"],
+  "2.1": ["08:00–14:00","18:00–20:00"],
+  "2.2": ["14:00–20:00"],
+  "3.1": ["10:00–15:00"],
+  "3.2": ["12:00–17:00"],
+  "4.1": ["01:00–05:00"],
+  "4.2": ["17:00–22:00"],
+  "5.1": ["03:00–09:00"],
+  "5.2": ["18:00–23:00"],
+  "6.1": ["04:00–10:00"],
+  "6.2": ["20:00–24:00"]
+};
+
+// Функція показу графіка
+function show(q){
+  document.getElementById("title").innerText = "Черга " + q;
+
+  let html = "<h3>Відключення:</h3>";
+
+  (schedule[q] || []).forEach(t=>{
+    html += `<div class="time-block">${t}</div>`;
+  });
+
+  html += `
+    <div class="chart">
+      <div class="bar"><div style="height:120px"></div></div>
+      <div class="bar"><div style="height:80px"></div></div>
+      <div class="bar"><div style="height:150px"></div></div>
+      <div class="bar"><div style="height:60px"></div></div>
+    </div>
+  `;
+
+  document.getElementById("content").innerHTML = html;
+}
+
+// Додаємо обробники подій для WebViewer
+document.getElementById("btn1").addEventListener("click", ()=>show('1.1'));
+document.getElementById("btn2").addEventListener("click", ()=>show('1.2'));
+document.getElementById("btn3").addEventListener("click", ()=>show('2.1'));
+document.getElementById("btn4").addEventListener("click", ()=>show('2.2'));
+document.getElementById("btn5").addEventListener("click", ()=>show('3.1'));
+document.getElementById("btn6").addEventListener("click", ()=>show('3.2'));
+document.getElementById("btn7").addEventListener("click", ()=>show('4.1'));
+document.getElementById("btn8").addEventListener("click", ()=>show('4.2'));
+document.getElementById("btn9").addEventListener("click", ()=>show('5.1'));
+document.getElementById("btn10").addEventListener("click", ()=>show('5.2'));
+document.getElementById("btn11").addEventListener("click", ()=>show('6.1'));
+document.getElementById("btn12").addEventListener("click", ()=>show('6.2'));
+</script>
+
+</body>
+</html>
